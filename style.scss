@@ -1,9 +1,31 @@
 @import './styles/base.scss';
 
+:root {
+  --primary-color: rgb(254, 254, 198);
+  --duration: 1s;
+  --easing: cubic-bezier(.5, 0, .5, 1);
+
+}
 body {
   font-family: 'Open Sans', sans-serif;
   padding: 5vmin;
-  background-color: #f4f4f4;
+  background-color: var(--primary-color);
+}
+
+#app {
+  --opacity: 1;
+  --bg: white;
+
+  &[data-state='loading'] {
+    --opacity: 0.5;
+    --bg: orange;
+  }
+
+  &[data-state='success'] {
+    --bg: green;
+  }
+
+  background: var(--bg);
 }
 
 a {
@@ -12,6 +34,12 @@ a {
 
 h1 {
   margin: 0;
+  transition: 0.2s;
+  opacity: var(--opacity);
+
+  &:hover{
+    font-size: 5vw;
+  }
 }
 
 small {
@@ -24,8 +52,47 @@ ul {
 }
 
 .ball {
+  --primary-color: orange;
   height: 5vmin;
   width: 5vmin;
+  left: 50vw;
   border-radius: 50%;
-  background: radial-gradient(circle at bottom right, #fb2324, #fe932a);
+  background: var(--primary-color);
+  --duration: 1s;
+  --stagger: 0.3s;
+  --interval: calc(var(--duration) - var(--stagger));
+  animation: move-right var(--duration) calc(var(--interval) * var(--i)) both;
+}
+
+
+@keyframes move-right {
+  from {
+    transform: none;
+  }
+
+  to {
+    transform: translateX(25vw);
+  }
+}
+
+
+.button {
+  appearance: none;
+  background: blue;
+  color: white;
+  font-weight: bold;
+  padding: 2rem;
+  border: none;
+  transition: all 0.3s;
+
+  &:hover{
+    opacity: 0.7;
+  }
+
+  &:active{
+    transition-duration: 0.15s;
+    transform: translateY(5%);
+    opacity: 1;
+  }
+
 }
